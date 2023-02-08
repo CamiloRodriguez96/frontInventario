@@ -1,6 +1,9 @@
 <template lang="">
     <div class="menus">
-        <h4>Usuarios</h4>
+        <div class="card">
+            <h5 class="card-header">Usuarios</h5>
+            <div class="card-body"></div>  
+       </div>           
     </div>
 </template>
 <script>

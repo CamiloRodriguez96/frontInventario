@@ -1,13 +1,13 @@
 <template lang="">
-    <div id="sideBar">
-        <div id="contenedorSide" class="compress">
-            <span @click="openSideBar" id="openSidebar" class="material-symbols-outlined">menu</span>
+    <div id="sideBar" class="shadow-lg bg-body-tertiary">
+        <div id="contenedorSide" class="compress ">
+            <span @click="openSideBar" id="letra" class="openSidebar material-symbols-outlined" >menu</span>
             <div class="line"></div>
-            <div class="contenedorEmpresa mb-4" >
+            <div class="contenedorEmpresa mb-3" >
                 <img id="logoEmpresa" src="@/assets/companyB.png">
             </div>
             <div class="contenedorPerfil mt-3">
-                <div class="menu">
+                <div class="menuPerfil">
                     <img src="@/assets/icono.png" >
                     <div id="datosPerfil">
                         <h4>Camilo Rodriguez</h4>
@@ -15,26 +15,26 @@
                     </div>
                 </div>
             </div>
-            <div class="contenedorBuscador mt-4">
+            <div class="contenedorBuscador mt-3">
                 <div id="buscadorProveedor">
-                    <input type="text" placeholder="Buscar">
-                    <span class="material-symbols-outlined">search</span>
+                    <input id="buscadorProveedorTexto" type="text" placeholder="Buscar">
+                    <span class="material-symbols-outlined" >search</span>
                 </div>
             </div>
             <div class="line"></div>
-            <h5 id="menu" class="mt-4">MENU</h5>
+            <h6 id="letra" class="menu mt-3">MENU</h6>
             <div id="options">
-                <div @click="goRoute('inicio')" id="option"> <span class="material-symbols-outlined me-2">home</span> <h5>Inicio</h5></div>
-                <div @click="goRoute('formulario')" id="option"> <span class="material-symbols-outlined me-2">description</span> <h5>Formularios</h5></div>
-                <div @click="goRoute('proveedor')" id="option"> <span class="material-symbols-outlined me-2">clinical_notes</span> <h5>Proveedores</h5></div>
-                <div @click="goRoute('usuario')" id="option"> <span class="material-symbols-outlined me-2 mb-2">manage_accounts</span> <h5>Usuarios</h5></div>
+                <div @click="goRoute('inicio')" id="option"> <span id="letra" class="material-symbols-outlined me-2">home</span> <h5 id="letra">Inicio</h5></div>
+                <div @click="goRoute('formulario')" id="option"> <span id="letra" class="material-symbols-outlined me-2">description</span> <h5 id="letra">Formularios</h5></div>
+                <div @click="goRoute('proveedor')" id="option"> <span id="letra" class="material-symbols-outlined me-2">clinical_notes</span> <h5 id="letra">Proveedores</h5></div>
+                <div @click="goRoute('usuario')" id="option"> <span id="letra" class="material-symbols-outlined me-2 mb-2">manage_accounts</span> <h5 id="letra">Usuarios</h5></div>
                 <div class="line"></div>
             </div>
 
-            <h5 id="menu" class="mt-4">PERFIL</h5>
+            <h6 id="letra" class="menu mt-4">PERFIL</h6>
             <div id="options">
-                    <div @click="goRoute('cliente')" id="option"> <span class="material-symbols-outlined me-2">apartment</span> <h5>Empresa</h5></div>
-                    <div @click="goRoute('ajustes')" id="option"> <span class="material-symbols-outlined me-2 mb-2">manage_accounts</span> <h5>Ajustes</h5></div>
+                    <div @click="goRoute('empresa')" id="option"> <span id="letra" class="material-symbols-outlined me-2">apartment</span> <h5 id="letra">Empresa</h5></div>
+                    <div @click="goRoute('ajustes')" id="option"> <span id="letra" class="material-symbols-outlined me-2 mb-2">manage_accounts</span> <h5 id="letra">Ajustes</h5></div>
                     <div class="line"></div>
             </div>
         </div>
@@ -43,11 +43,22 @@
 </template>
 <script>
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import useAjustes from '../helpers/useAjustes'
 
 export default {
     setup(){
         const router = useRouter()
         
+        const { obtenerCliente, datosCliente } = useAjustes()
+
+            onMounted( async () => {
+                await obtenerCliente()
+                document.getElementById("sideBar").style.background = datosCliente.value['colorSide']
+                document.querySelectorAll("#letra").forEach(element => {
+                    element.style.color = datosCliente.value['colorLetra']
+                });
+            })
 
         return{
             openSideBar: ()=>{
@@ -66,8 +77,12 @@ export default {
 <style scoped>
 
 /* Clase extendida */
+
+#sideBar{
+    overflow-y: auto; 
+    background-color: #303840;
+}
 #sideBar .extend{
-    background: #303840;
     width: 250px;
     height: 100vh;    
 }
@@ -78,13 +93,12 @@ export default {
     width: 100px;
     height: 35px;
 }
-#sideBar .extend #openSidebar{
-    font-size: 35px;
-    margin-left: 200px;
+#sideBar .extend .openSidebar{
     font-size: 30px;
+    margin-left: 200px;
     margin-top: 15px;
-    color: #8A9199;
     cursor: pointer;
+    
 }
 #sideBar .extend .contenedorPerfil{
     display: grid;
@@ -92,26 +106,26 @@ export default {
     cursor: pointer;
 
 }
-#sideBar .extend .contenedorPerfil .menu{
+#sideBar .extend .contenedorPerfil .menuPerfil{
     background-color: #FFFFFF;
     height: 60px;
     width: 220px;
     border-radius: 30px;
     display: flex;
 }
-#sideBar .extend .contenedorPerfil .menu img{
+#sideBar .extend .contenedorPerfil .menuPerfil img{
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-top: 5px;
     margin-left: 10px;
 }
-#sideBar .extend .contenedorPerfil .menu h4{
-    font-size: 17px;
-    margin-top: 10px;
-}
-#sideBar .extend .contenedorPerfil .menu h5{
+#sideBar .extend .contenedorPerfil .menuPerfil h4{
     font-size: 15px;
+    margin-top: 13px;
+}
+#sideBar .extend .contenedorPerfil .menuPerfil h5{
+    font-size: 13px;
     margin-top: -5px;
     color: #AAABAE ;
 }
@@ -124,21 +138,25 @@ export default {
     place-items: center;
     width: 220px;
     height: 40px;
-    background-color: #272C33;
+    /* background-color: #272C33; */
+    background-color: white;
     border-radius: 10px;
 }
 #sideBar .extend #buscadorProveedor input{    
-    background-color: #272C33;
+    background-color: transparent;
     border: 0;
     color: #808283;
     margin-left: 15px;
     outline: none;    
+    font-size: 13px;
+    margin-right: 30px;
 }
 #sideBar .extend #buscadorProveedor span{
     color: #808283;
     cursor: pointer;
+    
 }
-#sideBar .extend #menu{
+#sideBar .extend .menu{
     color: #808283;
     font-weight: bolder;
     margin: 10px;
@@ -150,11 +168,11 @@ export default {
     margin-left: 25px;
 }
 #sideBar .extend #option h5{
-    font-size: 17px;
+    font-size: 15px;
     color: #808283;
 }
 #sideBar .extend #option span{
-    font-size: 25px;
+    font-size: 20px;
     color: #808283;
 }
 #sideBar .extend #option:hover h5{
@@ -164,13 +182,18 @@ export default {
 #sideBar .extend #option:hover span{
     color: white;
     font-weight: bolder;
+    margin-left: 19px;
+
 }
 #sideBar .extend #option:hover {
     cursor: pointer;
     margin-left: 0px;
-    background-color: #272C33;
+    background-image: linear-gradient(
+      rgba(253, 253, 253, 0.15), 
+      rgba(255, 255, 255, 0.15)
+    );
 }
-#sideBar .extend .contenedorPerfil .menu:hover{
+#sideBar .extend .contenedorPerfil .menuPerfil:hover{
     border-radius: 25px;
 }
 
@@ -182,7 +205,6 @@ export default {
 /* Clase Comprimida ---------------------------*/
 
 #sideBar .compress{
-    background: #303840;
     width: 100px;
     height: 100vh;    
 }
@@ -194,7 +216,7 @@ export default {
     height: 25px;
     margin-top: 10px;
 }
-#sideBar .compress #openSidebar{
+#sideBar .compress .openSidebar{
     margin-left: 35px;
     font-size: 30px;
     margin-top: 15px;
@@ -206,7 +228,7 @@ export default {
     place-items: center;
     cursor: pointer;
 }
-#sideBar .compress .contenedorPerfil .menu{
+#sideBar .compress .contenedorPerfil .menuPerfil{
     background-color: #FFFFFF;
     height: 60px;
     width: 80px;
@@ -214,33 +236,39 @@ export default {
     display: flex;
     margin-top: -10px;
 }
-#sideBar .compress .contenedorPerfil .menu img{
+#sideBar .compress .contenedorPerfil .menuPerfil img{
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-top: 5px;
     margin-left: 15px;
 }
-#sideBar .compress .contenedorPerfil .menu h4{
+#sideBar .compress .contenedorPerfil .menuPerfil h4{
     display: none;
 }
-#sideBar .compress .contenedorPerfil .menu h5{
+#sideBar .compress .contenedorPerfil .menuPerfil h5{
     display: none;
 }
 #sideBar .compress .contenedorBuscador {
     display: grid;
     place-items: center;
+    
 }
 #sideBar .compress #buscadorProveedor {
     display: flex;
     place-items: center;
     width: 80px;
     height: 40px;
-    background-color: #272C33;
+    /* background-image: linear-gradient(
+      rgba(253, 253, 253, 1), 
+      rgba(255, 255, 255, 1)
+    ); */
+    background-color: white;
+    /* background-color: #272C33; */
     border-radius: 10px;
 }
 #sideBar .compress #buscadorProveedor input{    
-    background-color: #272C33;
+    background: transparent; 
     border: 0;
     margin-left: 15px;
     outline: none;   
@@ -251,7 +279,7 @@ export default {
     color: #808283;
     cursor: pointer;
 }
-#sideBar .compress #menu{
+#sideBar .compress .menu{
     color: #808283;
     font-weight: bolder;
     margin: 10px;
@@ -266,19 +294,26 @@ export default {
     display: none;
 }
 #sideBar .compress #option span{
-    font-size: 25px;
+    font-size: 20px;
     color: #808283;
 }
 #sideBar .compress #option:hover span{
     color: white;
     font-weight: bolder;
+    margin-left: 19px;
 }
 #sideBar .compress #option:hover {
     cursor: pointer;
-    background-color: #272C33;
-    margin-left: 10px;
+    background-image: linear-gradient(
+      rgba(253, 253, 253, 0.15), 
+      rgba(255, 255, 255, 0.15)
+    );
+    margin-left: 0px;
+    text-align: center;
+    font-size: 10px;
 }
-#sideBar .compress .contenedorPerfil .menu:hover{
+
+#sideBar .compress .contenedorPerfil .menuPerfil:hover{
     border-radius: 25px;
 }
 #sideBar .compress #buscadorProveedor:hover {

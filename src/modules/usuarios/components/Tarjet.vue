@@ -5,7 +5,7 @@
                 <div class="card h-100">
                     <div id="carta" class="card-body" >
                         <div id="cartaDetalle">
-                             <span class="material-symbols-outlined">production_quantity_limits</span><h5 class="card-title">Cantidad de Proveedores:</h5><h4 style=" background-color: #00979C;">{{ cantidadProveedores }}</h4>
+                             <span class="material-symbols-outlined">production_quantity_limits</span><h5 class="card-title">Cantidad Proveedores:</h5><h4 style="background-color: #00979C;">{{ cantidadProveedores }}</h4>
                         </div>    
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="card h-100">
                     <div id="carta" class="card-body" >
                         <div id="cartaDetalle">
-                             <span class="material-symbols-outlined">account_tree</span><h5 class="card-title">Cantidad de procesos:</h5><h4  style=" background-color: #E4A93C;">{{cantidadProcesos}}</h4>
+                             <span class="material-symbols-outlined">account_tree</span><h5 class="card-title">Cantidad procesos:</h5><h4  style=" background-color: #E4A93C;">{{cantidadProcesos}}</h4>
                         </div>    
                     </div>
                 </div>
@@ -65,28 +65,29 @@ export default {
 #carta{
     display: grid;
     place-items: end;
+    height: 60px;   
 }
-
 #cartaDetalle{
-    display: flex;    
+    display: flex;      
 }
-
+#cartaDetalle h5{
+    font-size: 15px;    
+}
 .card-title{
     font-weight: bolder;
 }
-
 .card-body span{
     margin-right: 12px;
 }
-
 #cartaDetalle h4{
     padding: 3px;
     border-radius: 5px;   
     font-weight: bolder;
     color: white;
-    font-size: 19px;
+    font-size: 16px;
     width: 50px;
     margin-left: 10px;
-    text-align: center;
+    text-align: center;    
+    margin-bottom: 15px;
 }
 </style>

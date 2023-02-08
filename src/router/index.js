@@ -15,4 +15,6 @@ const router = createRouter({
 
 })
 
+// router.beforeEach crear seguridad
+
 export default router

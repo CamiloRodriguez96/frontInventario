@@ -14,9 +14,9 @@ export default{
         component: () => import('@/modules/usuarios/views/Proveedor.vue')
       },
       {
-        path : '/cliente',
-        name : 'cliente',
-        component: () => import('@/modules/usuarios/views/Cliente.vue')
+        path : '/empresa',
+        name : 'empresa',
+        component: () => import('@/modules/usuarios/views/Empresa.vue'),
       },
       {
         path : '/formulario',
@@ -37,6 +37,11 @@ export default{
         path : '/usuario',
         name : 'usuario',
         component: () => import('@/modules/usuarios/views/Usuario.vue')
+      },
+      {
+        path : '/:pathMatch(.*)*',
+        name : 'No encontrada',
+        component: () => import('@/modules/usuarios/views/inicio.vue')
       },
 
   ]
