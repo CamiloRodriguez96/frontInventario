@@ -62,12 +62,14 @@
 
 import { onMounted } from 'vue'
 import useAjustes from '../helpers/useAjustes'
+import useAlerts from '../helpers/useAlerts'
 
 export default {
     
     setup(){   
-        const { actualizarCliente,obtenerCliente,datosCliente ,restablecerColores} = useAjustes()
-        
+        const { ToastConfirmacion  } = useAlerts()
+        const { actualizarCliente,obtenerCliente,datosCliente ,restablecerColores} = useAjustes()        
+
         onMounted( async () => {
             await obtenerCliente()  
             document.getElementById("razonSocial").value = datosCliente.value['razonSocial']
@@ -82,6 +84,7 @@ export default {
             
         })
         return{
+            ToastConfirmacion,
             actualizarCliente,
             obtenerCliente,
             datosCliente,
@@ -90,50 +93,66 @@ export default {
                 document.getElementById('logo').click()
             },
             guardarCliente: async()=>{
-                let razonSocial = document.getElementById("razonSocial").value
-                let nit = document.getElementById("nit").value
-                let direccion = document.getElementById("direccion").value
-                let telefono = document.getElementById("telefono").value
-                let logo = document.getElementById("logo").files[0]
-                let colorSide = document.getElementById("colorSide").value                
-                let colorLetra = document.getElementById("colorLetra").value                
-                let colorFondo = document.getElementById("colorFondo").value                
-                let id=1
-                let cliente = {
-                    id,
-                    razonSocial,                    
-                    nit,                    
-                    direccion,                    
-                    telefono,                    
-                    logo,                    
-                    colorSide,   
-                    colorLetra, 
-                    colorFondo  
-                }
-                await actualizarCliente(cliente)
+                ToastConfirmacion.fire({
+                    html: 'Se refrescara la pagina para actualizar la información. '
+                }).then(async(result) => {
+                        if (result.isConfirmed) {
+                        let razonSocial = document.getElementById("razonSocial").value
+                        let nit = document.getElementById("nit").value
+                        let direccion = document.getElementById("direccion").value
+                        let telefono = document.getElementById("telefono").value
+                        let logo = document.getElementById("logo").files[0]
+                        let colorSide = document.getElementById("colorSide").value                
+                        let colorLetra = document.getElementById("colorLetra").value                
+                        let colorFondo = document.getElementById("colorFondo").value                
+                        let id=1
+                        let cliente = {
+                            id,
+                            razonSocial,                    
+                            nit,                    
+                            direccion,                    
+                            telefono,                    
+                            logo,                    
+                            colorSide,   
+                            colorLetra, 
+                            colorFondo  
+                        }
+                        await actualizarCliente(cliente)
+                        window.location.reload()
+                    }
+                })
+
+
             },    
             restablecerColores: async()=>{
-                let razonSocial = document.getElementById("razonSocial").value
-                let nit = document.getElementById("nit").value
-                let direccion = document.getElementById("direccion").value
-                let telefono = document.getElementById("telefono").value
-                let logo = document.getElementById("logo").files[0]
-                let colorSide =  '#303840'            
-                let colorLetra = '#AAABAE'  
-                let colorFondo = '#F5F7FA'  
-                let id=1
-                let cliente = {
-                    id,
-                    razonSocial,                    
-                    nit,                    
-                    direccion,                    
-                    telefono,                    
-                    logo,                    
-                    colorSide,   
-                    colorLetra,  
-                    colorFondo 
-                }
-                await actualizarCliente(cliente)
+                ToastConfirmacion.fire({
+                    html: 'Se refrescara la pagina para actualizar colores predeterminados. '
+                }).then(async(result) => {
+                    if (result.isConfirmed) {
+                        let razonSocial = document.getElementById("razonSocial").value
+                        let nit = document.getElementById("nit").value
+                        let direccion = document.getElementById("direccion").value
+                        let telefono = document.getElementById("telefono").value
+                        let logo = document.getElementById("logo").files[0]
+                        let colorSide =  '#303840'            
+                        let colorLetra = '#AAABAE'  
+                        let colorFondo = '#F5F7FA'  
+                        let id=1
+                        let cliente = {
+                            id,
+                            razonSocial,                    
+                            nit,                    
+                            direccion,                    
+                            telefono,                    
+                            logo,                    
+                            colorSide,   
+                            colorLetra,  
+                            colorFondo 
+                        }
+                        await actualizarCliente(cliente)
+                        window.location.reload()
+                    }
+                })
             }    
 
         }

@@ -1,7 +1,7 @@
 import { useStore } from 'vuex'
 import {computed} from 'vue'
 
-const useEmpresa = () =>{
+const useProceso = () =>{
 
     const store = useStore()
 
@@ -58,4 +58,4 @@ const useEmpresa = () =>{
     }
 }
 
-export default useEmpresa
+export default useProceso

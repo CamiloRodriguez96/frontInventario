@@ -4,12 +4,12 @@
             <tarjet></tarjet>
             <div class="row mt-3">
                 <div class="col-md-8 col-sm-12">
-                    <IndicadorProveedor></IndicadorProveedor>    
-                    <TableProveedor></TableProveedor>
+                    <!-- <IndicadorProveedor></IndicadorProveedor>    
+                    <TableProveedor></TableProveedor> -->
                 </div>
                 <div class="col-md-4 col-sm-12">
-                    <tableProveedorNuevo></tableProveedorNuevo>    
-                    <IndicadorPendientes></IndicadorPendientes>    
+                    <!-- <tableProveedorNuevo></tableProveedorNuevo>    
+                    <IndicadorPendientes></IndicadorPendientes>     -->
                 </div>
             </div>
         </div>

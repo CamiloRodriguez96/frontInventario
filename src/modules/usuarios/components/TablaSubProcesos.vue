@@ -1,10 +1,10 @@
 <template>
     <div id="contenedorTitulo">
-        <h4 id="tituloTabla">Información de Procesos</h4>    
+        <h4 id="tituloTabla">Información de Sub procesos</h4>    
     </div>
     <div id="buscador">
         <div id="elementos">
-            <ModalProcesos id="modalAdicionar"></ModalProcesos>
+            <ModalSubProcesos id="modalAdicionar"></ModalSubProcesos>
             <input @keyup="obtenerDatosTodos(busquedaTexto.texto)" v-model="busquedaTexto.texto" type="text" placeholder="Buscar...">
             <button @click="obtenerDatosTodos(busquedaTexto.texto)"  class="btn" id="boton" > Buscar </button>
         </div>
@@ -12,22 +12,20 @@
     <div id="table" class="table-md mt-1">
         <table class="table">
             <thead>
-                <tr id="titulosTablaSubProceso">
+                <tr id="titulosTablaProceso">
                 <th class="estaticoTitulo" scope="col">Id</th>
                 <th class="estaticoTitulo2" scope="col">Editar</th>
                 <th class="normal" scope="col">Nombre</th>
-                <th class="normal" scope="col">Responsable</th>
-                <th class="normal" scope="col">Correo</th>
+                <th class="normal" scope="col">Proceso</th>
                 <th class="normal" scope="col">Borrar</th>
                 </tr>
             </thead>
             <tbody v-if="cantidadPaginaActual">
                 <tr id="letraTabla" v-for="datos in datosState" :key="datos.id">
                     <td class="estatico"> {{ datos.id }} </td>
-                    <td id="botonEditarFila" @click="traerIdEditar(datos.id)" data-bs-toggle="modal" data-bs-target="#exampleModalEditProceso" data-bs-whatever="@mdo"><span class="material-symbols-outlined">edit</span> </td>
+                    <td id="botonEditarFila" @click="traerIdEditar(datos.id)" data-bs-toggle="modal" data-bs-target="#exampleModalEditSubProceso" data-bs-whatever="@mdo"><span class="material-symbols-outlined">edit</span> </td>
                     <td class="normal">{{  datos.nombre }}</td>
-                    <td class="normal">{{  datos.responsable }}</td>
-                    <td class="normal">{{  datos.correoResponsable }}</td>
+                    <td class="normal">{{  datos.proceso }}</td>
                     <td @click="borrarDato(datos.id)" class="normal"><span class="material-symbols-outlined text-danger">DELETE</span></td>
                 </tr>         
             </tbody>
@@ -37,39 +35,44 @@
         <h6> Página {{ cantidadPaginaActual }} de {{ datosCantidadPaginasState  }}</h6>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
+                
                 <li v-if="cantidadPaginaActual != 1" @click="irPaginaAnterior" class="page-item"><a class="page-link" ><span class="material-symbols-outlined">arrow_back_ios</span></a></li>
                 <li @click="obtenerDatos(1)" class="page-item "><a class="page-link" >1</a></li>
                 <li v-if="cantidadPaginaActual != datosCantidadPaginasState && cantidadPaginaActual != 1 " @click="obtenerDatos(cantidadPaginaActual)" class="page-item"><a class="page-link" >{{cantidadPaginaActual}}</a></li>
                 <li v-if="cantidadPaginaActual != datosCantidadPaginasState" @click="obtenerDatos(datosCantidadPaginasState)" class="page-item"><a class="page-link" >{{datosCantidadPaginasState}}</a></li>
-                <li v-if="cantidadPaginaActual != datosCantidadPaginasState" @click="irPaginaSiguiente" class="page-item"><a class="page-link" ><span class="material-symbols-outlined">arrow_forward_ios</span></a></li>
+                <li v-if="cantidadPaginaActual != datosCantidadPaginasState " @click="irPaginaSiguiente" class="page-item"><a class="page-link" ><span class="material-symbols-outlined">arrow_forward_ios</span></a></li>
             </ul>
         </nav>
     </div>
     
+    
+    
 </template>
 <script>
-import useProceso from '../helpers/useProceso'
+import useSubProceso from '../helpers/useSubProceso'
 import { onMounted,reactive,defineAsyncComponent } from 'vue'
 import useAjustes from '../helpers/useAjustes'
 import useAlerts from '../helpers/useAlerts'
 
+
 export default {   
     components:{
-        ModalProcesos: defineAsyncComponent(() => import('../components/ModalProcesos.vue')),
+        ModalSubProcesos: defineAsyncComponent(() => import('../components/ModalSubProcesos.vue')),
+
     },
     setup(){ 
 
         const { ToastInformacion , ToastConfirmacion } = useAlerts()
         const { obtenerCliente, datosCliente } = useAjustes()
-        const {obtenerDatos , datosState , obtenerCantidadPaginas , datosCantidadPaginasState , irPaginaAnterior , cantidadPaginaActual , obtenerDatosTodos , borrar , obtenerId , datosPorId} = useProceso()
+        const {obtenerDatos , datosState , obtenerCantidadPaginas , datosCantidadPaginasState , irPaginaAnterior , cantidadPaginaActual , obtenerDatosTodos , borrar , obtenerId , datosPorId} = useSubProceso()
         const busquedaTexto = reactive({
             texto : ''
         })
 
         onMounted( async () => {    
             await obtenerCliente()
-            document.getElementById("titulosTablaProceso").style.background = datosCliente.value['colorSide']
-            document.getElementById("titulosTablaProceso").style.color = datosCliente.value['colorLetra']
+            document.getElementById("titulosTablaSubProceso").style.background = datosCliente.value['colorSide']
+            document.getElementById("titulosTablaSubProceso").style.color = datosCliente.value['colorLetra']
             document.querySelectorAll("#boton").forEach(element => {
                 element.style.background = datosCliente.value['colorSide']
                 element.style.color = datosCliente.value['colorLetra']
@@ -85,6 +88,7 @@ export default {
             obtenerDatos(1)
             obtenerCantidadPaginas()
         })
+
         return  {
             ToastInformacion,
             ToastConfirmacion,
@@ -99,7 +103,6 @@ export default {
             obtenerDatosTodos,
             borrar,
             datosPorId,
-
             irPaginaAnterior: () =>{
                 let numeroPagina = cantidadPaginaActual.value
                 if(numeroPagina>=2) numeroPagina--
@@ -109,9 +112,9 @@ export default {
                 let numeroPagina = cantidadPaginaActual.value
                 let cantidadPagina = datosCantidadPaginasState.value
                 if(numeroPagina>=1 && numeroPagina<cantidadPagina) numeroPagina++
-                obtenerDatos(numeroPagina)
-                
+                obtenerDatos(numeroPagina)                
             },
+
             borrarDato: async( dato )=>{
                 await obtenerId(dato)
                 ToastConfirmacion.fire({
@@ -125,12 +128,10 @@ export default {
                     }
                 })
             },
-
-            traerIdEditar: async( dato )=>{                    
+            traerIdEditar: async( dato )=>{
                 await obtenerId(dato)                
-                document.getElementById("nombreEditProceso").value = datosPorId.value[0]['nombre']
-                document.getElementById("responsableEditProceso").value = datosPorId.value[0]['responsable']
-                document.getElementById("correoResponsableEditProceso").value = datosPorId.value[0]['correoResponsable']
+                document.getElementById("nombreEditSubProceso").value = datosPorId.value[0]['nombre']
+                document.getElementById("procesoEditSubProceso").value = datosPorId.value[0]['proceso']
             },
         }
     }
@@ -139,13 +140,14 @@ export default {
 </script>
 <style scoped> 
 #contenedorTitulo{
-    width: 170px;
+    width: 180px;
 }
 
 #tituloTabla{
     font-size: 15px;
     font-weight: bolder;
-    border-bottom: 1px solid rgb(194, 191, 191);    
+    border-bottom: 1px solid rgb(194, 191, 191);
+    
 }
 
 #modalAdicionar{
@@ -240,9 +242,11 @@ table > tbody:empty:before {
     font-size: 12px;
     margin-bottom: 0px;
 }
+
 .pagination span{
     cursor: pointer;
 }
+
 table thead tr{
     background: #303840;
     color: #AAABAE;
@@ -281,7 +285,7 @@ table thead tr .estaticoTitulo2{
     text-align: center;
     position: sticky;
     left: 50px; 
-    width: 30px;
+    width: 30px;  
 }
 
 table tbody tr .normal{

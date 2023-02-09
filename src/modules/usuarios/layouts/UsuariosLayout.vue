@@ -4,34 +4,35 @@
         <navbar style="margin-left:98px;" ></navbar>
         <div class="content" id="content">
             <router-view></router-view>
-        </div>
+        </div>        
     </div>
 </template>
 <script>
 
 import { defineAsyncComponent } from 'vue';
-import { onMounted } from 'vue'
+import { onMounted  } from 'vue'
 import useAjustes from '../helpers/useAjustes';
 
+
 export default {
+
     components:{
         Navbar: defineAsyncComponent(() => import('../components/NavBar.vue')),
         SideBar: defineAsyncComponent(() => import('../components/SideBar.vue'))
     },
 
     setup(){
-
         const { obtenerCliente, datosCliente } = useAjustes()
-        onMounted( async () => {
+
+        onMounted( async() => {
             await obtenerCliente()
             document.getElementById("menus").style.background = datosCliente.value['colorFondo']
-        })
 
+        })
         return{
             datosCliente,
-            obtenerCliente
-
-
+            datosCliente,
+            obtenerCliente,
         }
     }
 }
@@ -40,8 +41,10 @@ export default {
 #menus{
     background-color: #F5F7FA;
 }    
-.content{
-    margin-left:130px; margin-right:30px; margin-top:30px; height: 91vh;
+    .content{    
+    margin-left:130px; margin-right:30px; margin-top:30px; height: 100vh;
 }
+
+
 
 </style>

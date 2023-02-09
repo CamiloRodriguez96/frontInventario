@@ -5,8 +5,7 @@
             <div class="card-body"></div>
             <div id="procesos">
                 <TablaProcesos></TablaProcesos>
-                <TablaProcesos></TablaProcesos>
-                <TablaProcesos></TablaProcesos>
+                <TablaSubProcesos></TablaSubProcesos>
             </div>
 
        </div>           
@@ -18,6 +17,7 @@ import { defineAsyncComponent } from 'vue';
 export default {
     components:{
         TablaProcesos: defineAsyncComponent(() => import('../components/TablaProcesos.vue')),
+        TablaSubProcesos: defineAsyncComponent(() => import('../components/TablaSubProcesos.vue')),
     }
 
 }        
@@ -25,6 +25,7 @@ export default {
 
 </script>
 <style scoped>
+
 .card-header{
     font-size: 19px;
     font-weight: bolder;
