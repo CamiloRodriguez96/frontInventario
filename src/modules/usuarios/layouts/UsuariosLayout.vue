@@ -1,18 +1,17 @@
 <template>    
-    <div id="menus">
-        <sideBar style="position:fixed; z-index:1"></sideBar>
+    <div  id="menus">
+        <sideBar style="position:fixed; z-index:3 ; height: 100%;"></sideBar>
         <navbar style="margin-left:98px;" ></navbar>
-        <div class="content" id="content">
+        <div class="content" id="content" style="position: relative; min-height: 100vh; ">
             <router-view></router-view>
-        </div>        
+        </div> 
     </div>
 </template>
 <script>
 
 import { defineAsyncComponent } from 'vue';
-import { onMounted  } from 'vue'
 import useAjustes from '../helpers/useAjustes';
-
+import { onMounted } from 'vue';
 
 export default {
 
@@ -22,17 +21,18 @@ export default {
     },
 
     setup(){
-        const { obtenerCliente, datosCliente } = useAjustes()
+        const { obtenerCliente, datosClienteMostrar, datosCliente } = useAjustes()
 
         onMounted( async() => {
             await obtenerCliente()
             document.getElementById("menus").style.background = datosCliente.value['colorFondo']
-
         })
+
+
         return{
-            datosCliente,
-            datosCliente,
             obtenerCliente,
+            datosClienteMostrar,
+            datosCliente
         }
     }
 }
@@ -41,10 +41,8 @@ export default {
 #menus{
     background-color: #F5F7FA;
 }    
-    .content{    
-    margin-left:130px; margin-right:30px; margin-top:30px; height: 100vh;
+.content{    
+    margin-left:130px; margin-right:30px;  margin-top:25px;  
 }
-
-
 
 </style>

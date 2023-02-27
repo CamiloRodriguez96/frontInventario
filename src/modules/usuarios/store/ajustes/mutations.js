@@ -1,11 +1,13 @@
 export const actualizarCliente = (state, { data }) =>{  
-    data = data[0]
-    if(data.razonSocial) state.razonSocial = data.razonSocial
-    if(data.nit) state.nit = data.nit
-    if(data.direccion) state.direccion = data.direccion
-    if(data.telefono) state.telefono = data.telefono
-    if(data.logo) state.logo = data.logo
-    if(data.colorSide) state.colorSide = data.colorSide
-    if(data.colorLetra) state.colorLetra = data.colorLetra
-    if(data.colorFondo) state.colorFondo = data.colorFondo
+    state.mostrar = true
+    if(data.nit_td) state.tipoDocumento = data.nit_td
+    if(data.nit_nombre) state.razonSocial = data.nit_nombre
+    if(data.nit_num) state.nit = data.nit_num
+    if(data.nit_direccion) state.direccion = data.nit_direccion
+    if(data.nit_telefono) state.telefono = data.nit_telefono
+    if(data.nit_logo) state.logo = data.nit_logo
+    if(data.nit_colorSide) state.colorSide = data.nit_colorSide
+    if(data.nit_colorLetra) state.colorLetra = data.nit_colorLetra
+    if(data.nit_colorFondo) state.colorFondo = data.nit_colorFondo
+
 }

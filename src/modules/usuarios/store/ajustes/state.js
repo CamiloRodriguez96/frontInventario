@@ -1,10 +1,12 @@
 export default () => ({
-    razonSocial : null,
-    nit : null,
-    direccion : null,
-    telefono : null,
-    logo : null,
-    colorSide : null,
-    colorLetra : null,
-    colorFondo : null,
+    tipoDocumento : '',
+    razonSocial : '',
+    nit : '',
+    direccion : '',
+    telefono : '',
+    logo : '',
+    colorSide : '',
+    colorLetra : '',
+    colorFondo : '',
+    mostrar : false
 })

@@ -1,9 +1,14 @@
-export const cantidadActualizarProveedores = (state, {data }) =>{    
-    if(data) state.cantidadProveedores = data
+export const actualizarInformacionData = ( state , {data,numeroPagina }) =>{
+    if(numeroPagina) state.paginaActual = numeroPagina
+    if(data) state.data = data
 }
-export const cantidadActualizarProveedoresPendientes = (state, { data }) =>{    
-    if(data) state.cantidadProveedorP = data
+export const modificarDataId = ( state , {data,id}) =>{
+    if(id) state.id = id   
+    if(data) state.dataId = data   
 }
-export const cantidadActualizarProceso = (state, {data }) =>{    
-    if(data) state.cantidadProcesos = data
+export const actualizarCantidadPaginas = ( state , {data }) =>{
+    if(data) state.cantidadPaginas = data
+    state.paginaActual = 1
+
 }
+

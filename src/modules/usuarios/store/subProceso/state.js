@@ -3,5 +3,7 @@ export default () => ({
     paginaActual : 1,
     cantidadPaginas : null,
     dataId : [],
-    id: null
+    id: null,
+    procesos: [],
+    nombres : []
 })

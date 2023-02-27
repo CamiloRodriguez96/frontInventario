@@ -1,34 +1,36 @@
 <template>
-    <div id="contenedorTitulo">
-        <h4 id="tituloTabla">Información de Procesos</h4>    
-    </div>
     <div id="buscador">
         <div id="elementos">
-            <ModalProcesos id="modalAdicionar"></ModalProcesos>
-            <input @keyup="obtenerDatosTodos(busquedaTexto.texto)" v-model="busquedaTexto.texto" type="text" placeholder="Buscar...">
-            <button @click="obtenerDatosTodos(busquedaTexto.texto)"  class="btn" id="boton" > Buscar </button>
+            <div id="contenedorElemento">
+                <ModalProcesos id="elemento" class="btn m-2"></ModalProcesos>
+                <input @keyup="obtenerDatosTodos(busquedaTexto.texto)" v-model="busquedaTexto.texto" type="text" placeholder="Buscar..." id="elemento" class="buscar m-2">
+            </div>
         </div>
     </div>
-    <div id="table" class="table-md mt-1">
+    <div id="table" class="table-responsive mt-1">
         <table class="table">
             <thead>
-                <tr id="titulosTablaSubProceso">
-                <th class="estaticoTitulo" scope="col">Id</th>
-                <th class="estaticoTitulo2" scope="col">Editar</th>
-                <th class="normal" scope="col">Nombre</th>
-                <th class="normal" scope="col">Responsable</th>
-                <th class="normal" scope="col">Correo</th>
-                <th class="normal" scope="col">Borrar</th>
+                <tr id="titulosTablaProceso">
+                    <th class="estaticoTitulo" scope="col">Id</th>
+                    <th class="estaticoTitulo2" scope="col">Editar</th>
+                    <th class="normal" scope="col">Nombre</th>
+                    <th class="normal" scope="col">Responsable</th>
+                    <th class="normal" scope="col">Cargo</th>
+                    <th class="normal" scope="col">Celular</th>
+                    <th class="normal" scope="col">Correo</th>
+                    <th class="normal" scope="col">Borrar</th>
                 </tr>
             </thead>
             <tbody v-if="cantidadPaginaActual">
-                <tr id="letraTabla" v-for="datos in datosState" :key="datos.id">
-                    <td class="estatico"> {{ datos.id }} </td>
-                    <td id="botonEditarFila" @click="traerIdEditar(datos.id)" data-bs-toggle="modal" data-bs-target="#exampleModalEditProceso" data-bs-whatever="@mdo"><span class="material-symbols-outlined">edit</span> </td>
-                    <td class="normal">{{  datos.nombre }}</td>
-                    <td class="normal">{{  datos.responsable }}</td>
-                    <td class="normal">{{  datos.correoResponsable }}</td>
-                    <td @click="borrarDato(datos.id)" class="normal"><span class="material-symbols-outlined text-danger">DELETE</span></td>
+                <tr id="letraTabla" v-for="datos in datosState" :key="datos.pro_id">
+                    <td class="estatico"> {{ datos.pro_id }} </td>
+                    <td id="botonEditarFila" @click="traerIdEditar(datos.pro_id)" data-bs-toggle="modal" data-bs-target="#exampleModalEditProceso" data-bs-whatever="@mdo"><span class="material-symbols-outlined">edit</span> </td>
+                    <td class="normal">{{  datos.pro_nombre }}</td>
+                    <td class="normal">{{  datos.pro_responsable }}</td>
+                    <td class="normal">{{  datos.pro_cargo }}</td>
+                    <td class="normal">{{  datos.pro_celular }}</td>
+                    <td class="normal">{{  datos.pro_correo }}</td>
+                    <td @click="borrarDato(datos.pro_id)" class="normal"><span class="material-symbols-outlined text-danger">DELETE</span></td>
                 </tr>         
             </tbody>
         </table>
@@ -44,14 +46,15 @@
                 <li v-if="cantidadPaginaActual != datosCantidadPaginasState" @click="irPaginaSiguiente" class="page-item"><a class="page-link" ><span class="material-symbols-outlined">arrow_forward_ios</span></a></li>
             </ul>
         </nav>
-    </div>
-    
+    </div>    
 </template>
 <script>
 import useProceso from '../helpers/useProceso'
 import { onMounted,reactive,defineAsyncComponent } from 'vue'
-import useAjustes from '../helpers/useAjustes'
 import useAlerts from '../helpers/useAlerts'
+import useSubProceso from '../helpers/useSubProceso'
+import useAjustes from '../helpers/useAjustes'
+
 
 export default {   
     components:{
@@ -59,32 +62,27 @@ export default {
     },
     setup(){ 
 
+        const { obtenerCliente, datosCliente  } = useAjustes()
         const { ToastInformacion , ToastConfirmacion } = useAlerts()
-        const { obtenerCliente, datosCliente } = useAjustes()
+        const { obtenerProcesos } = useSubProceso()
         const {obtenerDatos , datosState , obtenerCantidadPaginas , datosCantidadPaginasState , irPaginaAnterior , cantidadPaginaActual , obtenerDatosTodos , borrar , obtenerId , datosPorId} = useProceso()
         const busquedaTexto = reactive({
             texto : ''
         })
 
-        onMounted( async () => {    
-            await obtenerCliente()
-            document.getElementById("titulosTablaProceso").style.background = datosCliente.value['colorSide']
-            document.getElementById("titulosTablaProceso").style.color = datosCliente.value['colorLetra']
-            document.querySelectorAll("#boton").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']
-            });
-            document.querySelectorAll(".estaticoTitulo").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']
-            });
-            document.querySelectorAll(".estaticoTitulo2").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']
-            });
+        onMounted( async () => {   
             obtenerDatos(1)
-            obtenerCantidadPaginas()
+            // document.querySelectorAll("#titulosTablaProceso").forEach(element => {
+            //     element.style.background = datosCliente.value['colorSide']
+            //     element.style.color = datosCliente.value['colorLetra']
+            // }); 
+
+            // document.querySelectorAll("#{boton}").forEach(element => {
+            //     element.style.background = datosCliente.value['colorSide']
+            //     element.style.color = datosCliente.value['colorLetra']
+            // });
         })
+
         return  {
             ToastInformacion,
             ToastConfirmacion,
@@ -99,6 +97,9 @@ export default {
             obtenerDatosTodos,
             borrar,
             datosPorId,
+            obtenerProcesos,
+            obtenerCliente,
+            datosCliente,
 
             irPaginaAnterior: () =>{
                 let numeroPagina = cantidadPaginaActual.value
@@ -115,22 +116,24 @@ export default {
             borrarDato: async( dato )=>{
                 await obtenerId(dato)
                 ToastConfirmacion.fire({
-                    html: 'El registro se eliminara de forma permanente: <b>' +datosPorId.value[0]['nombre'] +'</b>',
+                    html: 'El registro se eliminara de forma permanente: <b>' +datosPorId.value[0]['pro_nombre'] +'</b>',
                 }).then(async(result) => {
                     if (result.isConfirmed) {
-                        ToastInformacion.fire({ icon: 'success', html: 'Registro eliminado: <b>' +datosPorId.value[0]['nombre'] +'</b>'})
+                        ToastInformacion.fire({ icon: 'success', html: 'Registro eliminado: <b>' +datosPorId.value[0]['pro_nombre'] +'</b>'})
                         await borrar(dato)    
                         obtenerDatos(1)  
                         obtenerCantidadPaginas()
+                        await obtenerProcesos()
                     }
                 })
             },
-
             traerIdEditar: async( dato )=>{                    
                 await obtenerId(dato)                
-                document.getElementById("nombreEditProceso").value = datosPorId.value[0]['nombre']
-                document.getElementById("responsableEditProceso").value = datosPorId.value[0]['responsable']
-                document.getElementById("correoResponsableEditProceso").value = datosPorId.value[0]['correoResponsable']
+                document.getElementById("nombreEditProceso").value = datosPorId.value[0]['pro_nombre']
+                document.getElementById("responsableEditProceso").value = datosPorId.value[0]['pro_responsable']
+                document.getElementById("cargoEditProceso").value = datosPorId.value[0]['pro_cargo']
+                document.getElementById("celularEditProceso").value = datosPorId.value[0]['pro_celular']
+                document.getElementById("correoEditProceso").value = datosPorId.value[0]['pro_correo']
             },
         }
     }
@@ -138,177 +141,90 @@ export default {
 }
 </script>
 <style scoped> 
-#contenedorTitulo{
-    width: 170px;
-}
 
-#tituloTabla{
-    font-size: 15px;
-    font-weight: bolder;
-    border-bottom: 1px solid rgb(194, 191, 191);    
-}
-
-#modalAdicionar{
-    margin-right: 5px;
-}
-
-
-@media screen and (min-width: 460px) {
-    #elementos{
-        display: flex;
-    }
-}
-
-#elementos #boton{
-    border: 1px solid black;
-}
-
-#buscador input{
-    color: #303840;
-    font-size: 12px;
+#table{  
     text-align: center;
-    border: 1px solid #a8acb1;
-    height: 30px;
-    max-width: 95px;
+    margin: 20px;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(170,171,174,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(170,171,174,1);
+    box-shadow: 0px 0px 5px 1px rgba(170,171,174,1);
 }
-#buscador button{
-    color: #AAABAE;
-    background: #303840;
-    font-size: 12px;
-    text-align: center;
-    margin-left: 5px;
+.table thead tr th{
+    font-size: 11px;
     font-weight: bolder;
+    height: 40px;
+    vertical-align: middle;
+}
+.table span{
+    font-size: 20px;
+    cursor: pointer;
+}
+.table tbody tr{
+    height: 50px;
+    vertical-align: middle;
+    font-size: 10px;
+    color: #808591;
+}
+.table thead{
+    -webkit-box-shadow: inset 0px -28px 98px -104px rgba(0,0,0,1);
+    -moz-box-shadow: inset 0px -28px 98px -104px rgba(0,0,0,1);
+    box-shadow: inset 0px -28px 98px -104px rgba(0,0,0,1);
+}
+#elementos{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+#elementos #contenedorElemento{
+    display: flex;
+    flex-wrap: wrap;
+}
+#elementos .btn{
+    border: 1px solid #AAABAE; 
+    width: 200px;
+    height: 30px;    
+    vertical-align: middle;
+    background-color: #303840;
+}
+#elementos .buscar{
+    border: 1px solid #AAABAE;
+    border-radius: 2px;
+    width: 250px;
     height: 30px;
+    text-align: center;
 }
-#buscador button:hover{
-    font-size: 13px;
-}
-#buscador input:hover{
-    font-size: 13px;
-}
-
-table > tbody:empty:before {
-    content: 'No existen registros...';
-    position: absolute;
-    font-size: 12px;
-    left: 30px;
-}
-
-#table{    
-    overflow-x: auto;
-    border: 1px solid #a8acb1;
-    border-radius: 5px; 
-    -webkit-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.75);   
-    min-height: 235px;
-}
-
-#table::-webkit-scrollbar{
-    height: 11px;
-    background-color: rgb(224, 224, 224);
-}
-
-#table::-webkit-scrollbar-thumb{
-    background-color: white;
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-bottom: 50px;        
-}
-#table::-webkit-scrollbar-thumb:hover{
-    background-color: rgb(201, 197, 197);
+#elementos #elemento:hover{
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
+    box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
 }
 #paginacion{
     display: grid;
     place-items: center;
 }
-#paginacion ul{    
-    overflow-x: auto;
-}
 #paginacion ul a{
-    color: black;
+    color: rgb(100, 100, 100);
     font-size: 12px;
+    cursor: pointer;
+    font-size: 10px;
 }
 #paginacion ul span{
-    color: black;
+    color: rgb(100, 100, 100);
     font-size: 10px;
     vertical-align: middle;
 }
-
 #paginacion h6{
-    color: black;
-    font-size: 12px;
+    color: rgb(100, 100, 100);
+    font-size: 10px;
     margin-bottom: 0px;
 }
 .pagination span{
     cursor: pointer;
 }
-table thead tr{
-    background: #303840;
-    color: #AAABAE;
-    font-size: 13px;
-    text-align: center;
-    justify-content: center;
+#botonEditarFila{
+    color: coral;
 }
 
-table tbody tr{
-    font-size: 12px;
-    height: 60px;
-    vertical-align: middle;
 
-}
-table tbody #botonEditarFila{
-    color: darkorange;
-    text-align: center;
-}
-
-table tbody tr span{
-    cursor: pointer;    
-}
-table thead tr .estaticoTitulo{
-    background: #303840;
-    color: #AAABAE;
-    font-size: 13px;
-    text-align: center;
-    position: sticky;
-    left: 0;    
-    width: 30px;
-}
-table thead tr .estaticoTitulo2{
-    background: #303840;
-    color: #AAABAE;
-    font-size: 13px;
-    text-align: center;
-    position: sticky;
-    left: 50px; 
-    width: 30px;
-}
-
-table tbody tr .normal{
-    color: #303840;
-    max-width: 130px;
-    height: 20px;  
-    text-align: center;  
-}
-table tbody tr .estatico{
-    color: #303840;
-    min-width: 50px;
-    height: 20px;
-    position: sticky;
-    left: 0;    
-    background-color: white;
-    text-align: center;
-
-}
-table tbody tr .estatico2{
-    color: #303840;
-    min-width: 50px;
-    height: 20px;
-    position: sticky;
-    left: 50px;   
-    background-color: white;
-    text-align: center;
-
-}
 
 </style>

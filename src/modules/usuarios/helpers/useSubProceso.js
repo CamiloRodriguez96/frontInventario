@@ -38,10 +38,20 @@ const useSubProceso = () =>{
         const resp = await store.dispatch('subProceso/borrar', proceso)
         return resp
     }
+    const obtenerProcesos = async ( proceso ) =>{
+        const resp = await store.dispatch('subProceso/obtenerProcesos', proceso)
+        return resp
+    }
+
+    const obtenerSubProcesos = async ( proceso ) =>{
+        const resp = await store.dispatch('subProceso/obtenerSubProcesos', proceso)
+        return resp
+    }
 
 
 
     return{
+        obtenerProcesos,
         obtenerDatos,
         obtenerId,
         obtenerCantidadPaginas,
@@ -50,11 +60,14 @@ const useSubProceso = () =>{
         borrar,
         crear,
         editar,
+        obtenerSubProcesos,
         datosState: computed(() => store.getters['subProceso/datosState']),
+        datosStateFormSub: computed(() => store.getters['subProceso/nombresSubProcesos']),
         cantidadPaginaActual: computed(() => store.getters['subProceso/cantidadPaginaActual']),
         datosCantidadPaginasState: computed(() => store.getters['subProceso/datosCantidadPaginasState']),
         datosPorId: computed(() => store.getters['subProceso/datosPorId']),
         idActual: computed(() => store.getters['subProceso/idActual']),
+        procesos: computed(() => store.getters['subProceso/procesos']),
     }
 }
 

@@ -1,6 +1,6 @@
 <template lang="">
-    <div id="sideBar" class="shadow-lg bg-body-tertiary">
-        <div id="contenedorSide" class="compress ">
+    <div id="sideBar" class="sideBar shadow-lg bg-body-tertiary">
+        <div id="contenedorSide" class="compress">
             <span @click="openSideBar" id="letra" class="openSidebar material-symbols-outlined" >menu</span>
             <div class="line"></div>
             <div class="contenedorEmpresa mb-3" >
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="line"></div>
-            <h6 id="letra" class="menu mt-3">MENU</h6>
+            <h6 id="letra" class="menu mt-5">MENU</h6>
             <div id="options">
                 <div @click="goRoute('inicio')" id="option"> <span id="letra" class="material-symbols-outlined me-2">home</span> <h5 id="letra">Inicio</h5></div>
                 <div @click="goRoute('formulario')" id="option"> <span id="letra" class="material-symbols-outlined me-2">description</span> <h5 id="letra">Formularios</h5></div>
@@ -33,7 +33,7 @@
 
             <h6 id="letra" class="menu mt-4">PERFIL</h6>
             <div id="options">
-                    <div @click="goRoute('empresa')" id="option"> <span id="letra" class="material-symbols-outlined me-2">apartment</span> <h5 id="letra">Empresa</h5></div>
+                    <div @click="goRoute('procesos')" id="option"> <span id="letra" class="material-symbols-outlined me-2">apartment</span> <h5 id="letra">Empresa</h5></div>
                     <div @click="goRoute('ajustes')" id="option"> <span id="letra" class="material-symbols-outlined me-2 mb-2">manage_accounts</span> <h5 id="letra">Ajustes</h5></div>
                     <div class="line"></div>
             </div>
@@ -43,22 +43,23 @@
 </template>
 <script>
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import {onMounted} from 'vue'
 import useAjustes from '../helpers/useAjustes'
 
 export default {
     setup(){
-        const router = useRouter()
+        const router = useRouter()   
+        const { obtenerCliente, datosCliente  } = useAjustes()
         
-        const { obtenerCliente, datosCliente } = useAjustes()
+        onMounted( async() => {
+            await obtenerCliente()
+            // document.getElementById("sideBar").style.background = datosCliente.value['colorSide']
+            // document.querySelectorAll("#letra").forEach(element => {
+            //     element.style.color = datosCliente.value['colorLetra']
 
-            onMounted( async () => {
-                await obtenerCliente()
-                document.getElementById("sideBar").style.background = datosCliente.value['colorSide']
-                document.querySelectorAll("#letra").forEach(element => {
-                    element.style.color = datosCliente.value['colorLetra']
-                });
-            })
+            // }); 
+        })
+        
 
         return{
             openSideBar: ()=>{
@@ -98,34 +99,33 @@ export default {
     margin-left: 200px;
     margin-top: 15px;
     cursor: pointer;
-    
+    color: white;    
 }
 #sideBar .extend .contenedorPerfil{
     display: grid;
     place-items: center;
     cursor: pointer;
-
 }
 #sideBar .extend .contenedorPerfil .menuPerfil{
     background-color: #FFFFFF;
-    height: 60px;
+    height: 50px;
     width: 220px;
-    border-radius: 30px;
+    border-radius: 23px;
     display: flex;
 }
 #sideBar .extend .contenedorPerfil .menuPerfil img{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     margin-top: 5px;
     margin-left: 10px;
 }
 #sideBar .extend .contenedorPerfil .menuPerfil h4{
-    font-size: 15px;
+    font-size: 11px;
     margin-top: 13px;
 }
 #sideBar .extend .contenedorPerfil .menuPerfil h5{
-    font-size: 13px;
+    font-size: 12px;
     margin-top: -5px;
     color: #AAABAE ;
 }
@@ -137,10 +137,10 @@ export default {
     display: flex;
     place-items: center;
     width: 220px;
-    height: 40px;
-    /* background-color: #272C33; */
+    height: 35px;
     background-color: white;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 #sideBar .extend #buscadorProveedor input{    
     background-color: transparent;
@@ -148,13 +148,12 @@ export default {
     color: #808283;
     margin-left: 15px;
     outline: none;    
-    font-size: 13px;
+    font-size: 11px;
     margin-right: 30px;
 }
 #sideBar .extend #buscadorProveedor span{
     color: #808283;
     cursor: pointer;
-    
 }
 #sideBar .extend .menu{
     color: #808283;
@@ -168,8 +167,9 @@ export default {
     margin-left: 25px;
 }
 #sideBar .extend #option h5{
-    font-size: 15px;
+    font-size: 11px;
     color: #808283;
+    margin-top: 5px;
 }
 #sideBar .extend #option span{
     font-size: 20px;
@@ -183,7 +183,6 @@ export default {
     color: white;
     font-weight: bolder;
     margin-left: 19px;
-
 }
 #sideBar .extend #option:hover {
     cursor: pointer;
@@ -232,16 +231,15 @@ export default {
     background-color: #FFFFFF;
     height: 60px;
     width: 80px;
-    border-radius: 30px;
+    border-radius: 25px;
     display: flex;
-    margin-top: -10px;
 }
 #sideBar .compress .contenedorPerfil .menuPerfil img{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    margin-top: 5px;
-    margin-left: 15px;
+    margin-top: 10px;
+    margin-left: 20px;
 }
 #sideBar .compress .contenedorPerfil .menuPerfil h4{
     display: none;
@@ -258,13 +256,8 @@ export default {
     display: flex;
     place-items: center;
     width: 80px;
-    height: 40px;
-    /* background-image: linear-gradient(
-      rgba(253, 253, 253, 1), 
-      rgba(255, 255, 255, 1)
-    ); */
+    height: 35px;
     background-color: white;
-    /* background-color: #272C33; */
     border-radius: 10px;
 }
 #sideBar .compress #buscadorProveedor input{    
@@ -273,7 +266,7 @@ export default {
     margin-left: 15px;
     outline: none;   
     width: 40px; 
-    font-size: 12px;
+    font-size: 10px;
 }
 #sideBar .compress #buscadorProveedor span{
     color: #808283;

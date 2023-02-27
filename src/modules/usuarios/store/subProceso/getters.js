@@ -12,7 +12,13 @@ export const cantidadPaginaActual = (state) =>{
 export const datosPorId = (state) =>{
     return state.dataId
 }
-
 export const idActual = (state) =>{
     return state.id
+}
+export const procesos = (state) =>{
+    return state.procesos
+}
+export const nombresSubProcesos = (state) =>{
+    // console.log(state.nombres)
+    return state.nombres
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="sideBar">        
+    <div class="navBar">        
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
                 <div id="contenerBrand" class="ms-3">
@@ -34,7 +34,6 @@ export default {
         const { obtenerCliente, datosCliente } = useAjustes()
 
         onMounted( async () => {
-            await obtenerCliente()
             document.getElementById("empresa").text = datosCliente.value['razonSocial']
         })
 
@@ -49,47 +48,38 @@ export default {
 </script>
 <style scoped>
     
-.sideBar{
-    height: 55px;
+.navBar{
+    height: 41px;
     background-color: white;
-    box-shadow: 3px 3px #E1E3E7, -1em 0 0.3em #E1E3E7;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(170,171,174,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(170,171,174,1);
+    box-shadow: 0px 0px 5px 1px rgba(170,171,174,1);   
 } 
 
-@media (max-width: 600px) {  
-    .sideBar #contenerBrand a{
+@media (max-width: 600px) { 
+    .navBar #contenerBrand a{
      display: none;
     }
     #buscador{
         display: none;
     }
-
-
 }
-.sideBar #contenerBrand a{
-    font-size: 20px;
-}
-
-#empresa{
-    font-size: 25px;
+.navBar #contenerBrand a{
+    font-size: 15px;
     font-weight: bolder;
 }
-
-
 #opciones input{
     height: 25px;
-    font-size: 13px;
+    font-size: 10px;
 }
-
 #opciones span{
-    font-size: 23px;
+    font-size: 20px;
     color: black;
     cursor: pointer;
 }
 #opciones span:hover{
     font-size: 24px;
     color: black;
-}
-
- 
+} 
 
 </style>

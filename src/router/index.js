@@ -1,12 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import usuarioRouter from '@/modules/usuarios/router'
+import proveedorRouter from '@/modules/proveedores/router'
 
 const routes = [
   {
     path: '/',
     name: 'usuarios',
     ...usuarioRouter
+  },
+  {
+    path: '/proveedores',
+    name: 'proveedores',
+    ...proveedorRouter
   }
+
 ]
 
 const router = createRouter({

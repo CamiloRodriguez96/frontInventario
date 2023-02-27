@@ -5,26 +5,55 @@ const useProveedor = () =>{
 
     const store = useStore()
 
-    const obtenerCantidadProveedor = async () =>{
-        const resp = await store.dispatch('proveedor/obtenerCantidadProveedor')
+    const obtenerDatos = async ( numeroPagina) =>{
+        const resp = await store.dispatch('proveedor/obtenerDatos' , numeroPagina)
         return resp
     }
-    const obtenerCantidadProveedorPendientes = async () =>{
-        const resp = await store.dispatch('proveedor/obtenerCantidadProveedorPendientes')
+    const obtenerDatosTodos = async ( texto ) =>{
+        const resp = await store.dispatch('proveedor/obtenerDatosTodos', texto )
         return resp
     }
-    const obtenerCantidadProcesos = async () =>{
-        const resp = await store.dispatch('proveedor/obtenerCantidadProcesos')
+    const obtenerId = async ( id ) =>{
+        const resp = await store.dispatch('proveedor/obtenerId', id )
+        return resp
+    }
+    const obtenerCantidadPaginas = async ( ) =>{
+        const resp = await store.dispatch('proveedor/obtenerCantidadPaginas')
+        return resp
+    }
+    const irPaginaAnterior = async ( ) =>{
+        const resp = await store.dispatch('proveedor/irPaginaAnterior')
+        return resp
+    }
+    const crear = async ( proveedor ) =>{
+        const resp = await store.dispatch('proveedor/crear', proveedor)
+        return resp
+    }
+    const editar = async ( dato ) =>{
+        const resp = await store.dispatch('proveedor/editar', dato)
+        return resp
+    }
+    const borrar = async ( proveedor ) =>{
+        const resp = await store.dispatch('proveedor/borrar', proveedor)
         return resp
     }
 
+
+
     return{
-        obtenerCantidadProveedor,
-        obtenerCantidadProveedorPendientes,
-        obtenerCantidadProcesos,
-        cantidadProveedores: computed(() => store.getters['proveedor/cantidadProveedores']),
-        cantidadProveedoresPendientes: computed(() => store.getters['proveedor/cantidadProveedoresPendientes']),
-        cantidadProcesos: computed(() => store.getters['proveedor/cantidadProcesos'])
+        obtenerDatos,
+        obtenerId,
+        obtenerCantidadPaginas,
+        irPaginaAnterior,
+        obtenerDatosTodos,
+        borrar,
+        crear,
+        editar,
+        datosState: computed(() => store.getters['proveedor/datosState']),
+        cantidadPaginaActual: computed(() => store.getters['proveedor/cantidadPaginaActual']),
+        datosCantidadPaginasState: computed(() => store.getters['proveedor/datosCantidadPaginasState']),
+        datosPorId: computed(() => store.getters['proveedor/datosPorId']),
+        idActual: computed(() => store.getters['proveedor/idActual']),
     }
 }
 

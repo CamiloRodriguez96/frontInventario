@@ -55,7 +55,7 @@ table{
 table thead{
     background-color: #e45e3c;
     color: white;
-
 }
+
     
 </style>

@@ -21,7 +21,7 @@ const useAlerts = () =>{
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#303840',
-        confirmButtonText: 'Eliminar!'            
+        confirmButtonText: 'Confirmar!'            
     })  
 
     return{

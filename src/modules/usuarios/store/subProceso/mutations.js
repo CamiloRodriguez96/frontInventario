@@ -9,6 +9,12 @@ export const modificarDataId = ( state , {data,id}) =>{
 export const actualizarCantidadPaginas = ( state , {data }) =>{
     if(data) state.cantidadPaginas = data
     state.paginaActual = 1
-
+}
+export const actualizarProcesosActual = ( state , {data }) =>{
+    if(data) state.procesos = data
 }
 
+export const actualizarSubProcesos = ( state , {data }) =>{
+    if(data) state.nombres = data
+
+}

@@ -1,7 +1,7 @@
 <template lang="">
     <div>
         <div id="botonModal">
-            <button type="button" id="boton"  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSubProceso" data-bs-whatever="@mdo"><span id="boton" class="material-symbols-outlined">add</span>Adicionar</button>
+            <button type="button" id="boton"  class="btn" data-bs-toggle="modal" data-bs-target="#exampleModalSubProceso" data-bs-whatever="@mdo"><span id="boton" class="material-symbols-outlined">post_add</span>Adicionar</button>
         </div>
 
         <div class="modal fade" id="exampleModalSubProceso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -18,14 +18,11 @@
                             <input type="text" class="form-control" placeholder="Nombre Sub Proceso" aria-describedby="basic-addon1" id="nombreSubProceso" >
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><span class="material-symbols-outlined">mail</span></span>
-                            <input type="text" class="form-control" placeholder="Nombre Proceso" aria-describedby="basic-addon1" id="procesoSubProceso">
-                            <!-- <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select> -->
+                            <span class="input-group-text" id="basic-addon1"><span class="material-symbols-outlined">rebase</span></span>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="procesoSubProceso">
+                                <option selected>Selecciona el Proceso</option>
+                                <option v-for="proceso in procesos" :key="proceso" :value="proceso.pro_nombre">{{proceso.pro_nombre}}</option>
+                            </select>
                         </div>
                     </form>
                 </div>
@@ -53,8 +50,11 @@
                             <input type="text" class="form-control" placeholder="Nombre Proceso" aria-describedby="basic-addon1" id="nombreEditSubProceso" >
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1"><span class="material-symbols-outlined">support_agent</span></span>
-                            <input type="text" class="form-control" placeholder="Responsable" aria-describedby="basic-addon1" id="procesoEditSubProceso">
+                            <span class="input-group-text" id="basic-addon1"><span class="material-symbols-outlined">rebase</span></span>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="procesoEditSubProceso">
+                                <option selected>Selecciona el Proceso</option>
+                                <option v-for="proceso in procesos" :key="proceso.pro_nombre" :value="proceso.pro_nombre">{{proceso.pro_nombre}}</option>
+                            </select>
                         </div>
                     </form>
                 </div>
@@ -70,78 +70,86 @@
 </template>
 <script>
 import useSubProceso from '../helpers/useSubProceso'
-import useAjustes from '../helpers/useAjustes'
 import useAlerts from '../helpers/useAlerts'
 import { onMounted } from 'vue'
+import useAjustes from '../helpers/useAjustes'
 
 export default {
 
     setup(){
         const { ToastInformacion  } = useAlerts()
-
-        const { obtenerDatos, crear , editar , idActual , cantidadPaginaActual ,obtenerCantidadPaginas } = useSubProceso()
-        const { obtenerCliente, datosCliente } = useAjustes()
+        const { obtenerCliente, datosCliente  } = useAjustes()
+        const { obtenerDatos, crear , editar , idActual , cantidadPaginaActual ,obtenerCantidadPaginas , obtenerProcesos, procesos } = useSubProceso()
 
         onMounted( async () => {
-            await obtenerCliente()
-            document.querySelectorAll("#boton").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']                
-            });
-            document.querySelectorAll("#botonGuardarSubProceso").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']                
-            });
-            document.querySelectorAll("#spanBoton").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']
-
-            });
-            document.querySelectorAll("#modalTitulo").forEach(element => {
-                element.style.background = datosCliente.value['colorSide']
-                element.style.color = datosCliente.value['colorLetra']                
-            });
-            
+            await obtenerProcesos()
+            // document.querySelectorAll("#boton").forEach(element => {
+            //     element.style.background = datosCliente.value['colorSide']
+            //     element.style.color = datosCliente.value['colorLetra']
+            // });
+            // document.querySelectorAll("#modalTitulo").forEach(element => {
+            //     element.style.background = datosCliente.value['colorSide']
+            //     element.style.color = datosCliente.value['colorLetra']
+            // });
+            // document.querySelectorAll("#botonGuardarSubProceso").forEach(element => {
+            //     element.style.background = datosCliente.value['colorSide']
+            //     element.style.color = datosCliente.value['colorLetra']
+            // });
+            // document.querySelectorAll("#spanBoton").forEach(element => {
+            //     element.style.background = datosCliente.value['colorSide']
+            //     element.style.color = datosCliente.value['colorLetra']
+            // });        
         })
 
         return{
+            obtenerProcesos,
+            procesos,
             ToastInformacion,
             idActual,
             cantidadPaginaActual,
             obtenerCantidadPaginas,
+            obtenerCliente,
+            datosCliente,
+            traer: () =>{
+                console.log(procesos)
+            },
+
             guardar: async ()=>{
-                let nombre = document.getElementById("nombreSubProceso").value
-                let proceso = document.getElementById("procesoSubProceso").value
-                let cliente = "860090915"        
+                let spr_nombre = document.getElementById("nombreSubProceso").value
+                let pro_nombre = document.getElementById("procesoSubProceso").value
+                let nit_num = "860090915"        
                 let datos = {
-                    nombre,
-                    proceso,
-                    cliente
+                    spr_nombre,
+                    pro_nombre,
+                    nit_num,
+                    spr_borrado:0,
                 }
                 await crear(datos)
                 obtenerDatos(1)
                 obtenerCantidadPaginas()
                 document.getElementById("botonCerrarSubProceso").click()
                 document.getElementById("nombreSubProceso").value = ''
-                document.getElementById("procesoSubProceso").value = ''
-                ToastInformacion.fire({ icon: 'success', html: 'Registro guardado correctamente: <b>' +nombre +'</b>'})  
+                document.getElementById("procesoSubProceso").value = 'Selecciona el Proceso'
+                ToastInformacion.fire({ icon: 'success', html: 'Registro guardado correctamente: <b>' +spr_nombre +'</b>'})  
 
             },
             editarDato: async ()=>{
-                let nombre = document.getElementById("nombreEditSubProceso").value
-                let proceso = document.getElementById("procesoEditSubProceso").value
-                let id = idActual.value
+                let spr_nombre = document.getElementById("nombreEditSubProceso").value
+                let pro_nombre = document.getElementById("procesoEditSubProceso").value
+                let spr_id = idActual.value
                 let datos = {
-                    id,
-                    nombre,
-                    proceso,                    
+                    spr_id,
+                    spr_nombre,
+                    pro_nombre,     
+                    spr_borrado:0,
+                    // consecutivo:0               
                 }
                 await editar(datos)
                 document.getElementById("botonCerrarSubProcesoEditarSubProceso").click()
                 obtenerDatos(cantidadPaginaActual.value)
                 document.getElementById("nombreEditSubProceso").value = ''
                 document.getElementById("procesoEditSubProceso").value = ''
-                ToastInformacion.fire({ icon: 'success', html: 'Registro editado correctamente: <b>' +nombre +'</b>'})  
+                ToastInformacion.fire({ icon: 'success', html: 'Registro editado correctamente: <b>' +spr_nombre +'</b>'})  
             }
 
         }
@@ -150,73 +158,48 @@ export default {
 }
 </script>
 <style scoped>
-    
-#botonModal{
-    margin-bottom: 5px;
+    #botonModal{
+    text-align: center; 
 }
 
-#botonModal span{
-    color: #AAABAE;
-    font-size: 12px;
-    vertical-align: middle;
-}
 #botonModal button{
-    background : #303840;
-    color: #AAABAE;
-    font-size: 12px;
-    border: 1px solid black;
-    font-weight: bolder;
+    margin-top: -5px;
+    width: 100%;
+    color: white;
 }
-#botonModal button:hover{
-    font-size: 12.5px;    
-}
-
-#modalTitulo{
-    background : #303840;
-}
-.modal-header .modal-title{
-    color: #AAABAE;
-    font-size: 16px;
-}
-.modal-header .modal-title span{
-    color: #AAABAE;
-    font-size: 23px;
+#botonModal span{
     vertical-align: middle;
 }
-
-.modal-body input{
-    font-size: 14px;
-
+.modal-header{
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
+    box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
 }
-.modal-body span{
-    font-size: 16px;
+.modal-header h1{
+    font-size: 12px;
+    vertical-align: middle;
+}
+.modal-header span{
+    font-size: 30px;
+    vertical-align: middle;
+}
+.modal-footer button{
+    width: 100px;
+    height: 30px; 
+    border: 1px solid #AAABAE;
+}
+.modal-footer button:hover{
+    -webkit-box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
+    -moz-box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
+    box-shadow: 0px 0px 5px 3px rgba(148,145,148,1);
 }
 .modal-footer #botonGuardarSubProceso{
-    background : #303840;
-    color: #AAABAE;
-    font-size: 13px;
-    border: 1px solid black;   
-    font-weight: bolder;
+    background-color: #303840;
+    color: white;
 }
 .modal-footer #botonGuardarSubProceso span{
-    background : #303840;
-    color: #AAABAE;
-    font-size: 19px;
     vertical-align: middle;
-}
-.modal-footer #botonCerrarSubProceso{
-    background : white;
-    color: black;
-    font-weight: bolder;
-    font-size: 13px;
-    border: 1px solid black;          
-}
-.modal-footer #botonCerrarSubProcesoEditarSubProceso{
-    background : white;
-    color: black;
-    font-weight: bolder;
-    font-size: 13px;
-    border: 1px solid black;          
+    font-size: 17px;
 }
 
 </style>

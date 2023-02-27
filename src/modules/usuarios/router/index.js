@@ -17,11 +17,38 @@ export default{
         path : '/empresa',
         name : 'empresa',
         component: () => import('@/modules/usuarios/views/Empresa.vue'),
+        children:[
+          {
+          path : 'procesos',
+          name : 'procesos',
+          component: () => import('@/modules/usuarios/components/TablaProcesos.vue')
+          },
+          {
+          path : 'periodos',
+          name : 'periodos',
+          component: () => import('@/modules/usuarios/components/TablaPeriodos.vue')
+          },
+          {
+          path : 'subProcesos',
+          name : 'subProcesos',
+          component: () => import('@/modules/usuarios/components/TablaSubProcesos.vue')
+          },
+          {
+          path : 'formularioInicial',
+          name : 'formularioInicial',
+          component: () => import('@/modules/usuarios/components/TablaFormularios.vue')
+          },
+          {
+          path : 'formularioDetalle',
+          name : 'formularioDetalle',
+          component: () => import('@/modules/usuarios/components/TablaFormularioDetallesForm.vue')
+          },
+        ]
       },
       {
         path : '/formulario',
         name : 'formulario',
-        component: () => import('@/modules/usuarios/views/Formulario.vue')
+        component: () => import('@/modules/usuarios/views/Formulario.vue'),
       },
       {
         path : '/ajustes',

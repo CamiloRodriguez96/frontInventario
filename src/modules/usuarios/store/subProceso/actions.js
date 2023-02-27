@@ -10,9 +10,10 @@ export const obtenerDatos = async ({ commit } , numeroPagina) => {
     })    
     commit('actualizarInformacionData', { data, numeroPagina})
 }
+
 export const obtenerDatosTodos = async ({ commit }, texto) => {
     let { data } = await proveedorApi.post('/subProceso',{
-        "opcion" : "informaciónTotal",
+        "opcion" : "informacionTotal",
         texto,
         "numeroDePagina" : 1,
         numeroElementosPorPagina       
@@ -43,15 +44,27 @@ export const editar = async ({ commit } , datos) => {
 export const borrar = async ({ commit } , datos) => {
     let { data } = await proveedorApi.post('/subProceso',{  
         "opcion" : "borrar",  
-        "id" : datos
+        "spr_id" : datos,
+        "borrado" : 1
     })    
 }
-
 export const obtenerId = async ({ commit } , id) => {
     let { data } = await proveedorApi.post('/subProceso',{  
         "opcion" : "obtenerId",  
-        "id" : id
+        "spr_id" : id
     })    
     commit( 'modificarDataId' , {data,id})
 }
+export const obtenerProcesos = async ({ commit }) => {
+    let { data } = await proveedorApi.post('/procesopl',{  
+        "opcion" : "procesoSoloNombre"
+    })    
+    commit( 'actualizarProcesosActual' , {data})
+}
 
+export const obtenerSubProcesos = async ({ commit }) => {
+    let { data } = await proveedorApi.post('/subProceso',{  
+        "opcion" : "subProcesoSoloNombre"
+    })    
+    commit( 'actualizarSubProcesos' , {data})
+}

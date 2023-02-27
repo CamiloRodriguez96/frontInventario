@@ -10,10 +10,20 @@ $theme-colors: (
   "dark":       #212529
 );
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200&display=swap');
+
 *{
-    font-family: Calibri;
+    font-family: 'Outfit', sans-serif;
+    font-size: 10px;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 100,
+  'GRAD' 0,
+  'opsz' 40
+}
 
 @import 'node_modules/bootstrap/scss/bootstrap.scss'
 

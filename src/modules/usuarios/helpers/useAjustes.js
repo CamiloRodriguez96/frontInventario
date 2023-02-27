@@ -23,7 +23,9 @@ const useAjustes = () =>{
         actualizarCliente,
         obtenerCliente,
         restablecerColores,
-        datosCliente: computed(() => store.getters['ajustes/datosCliente'])
+        datosCliente: computed(() => store.getters['ajustes/datosCliente']),
+        datosClienteMostrar: computed(() => store.getters['ajustes/datosClienteMostrar']),
+
     }
 }
 

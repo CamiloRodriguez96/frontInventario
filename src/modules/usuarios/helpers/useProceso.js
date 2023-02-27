@@ -13,7 +13,6 @@ const useProceso = () =>{
         const resp = await store.dispatch('proceso/obtenerDatosTodos', texto )
         return resp
     }
-
     const obtenerId = async ( id ) =>{
         const resp = await store.dispatch('proceso/obtenerId', id )
         return resp
