@@ -1,13 +1,34 @@
-Boton Descargar PDF y EXCEL
-Colores Actualizar con Vif colores
-Arreglar botones de arriba de tablas (Buscar, agregar)
-Arreglar paginación + buscador
-Ajustar boton guardar de ajustes texto
-Permisos por areas.
-Criticdad
-Conexión de base sin fortyclient
-Crear Periodo - debe copiar otro    
-Modificar periodo debe modificar formularios y todo
+5. Ajustar front con alertas
+    revisar cada pagina, notas y demas. (duplicados y todo) validar que se puede editar y que no
+    Hacer mutación para borrar datos
+    verificar que todo guarde nitcliente
+6. Modulo evaluación
+7. Conectar google drive.
+8. Guardar documentos
+9. Finalizar vistas de documentos.
+10. Indicadores y alertas.
+Ajustar modulo de usuarios todo
+11. Sesión validar.
+12. Sesión por permisos (ajustar sidebar)
+regex
+13. Modulo Inicio CHARTJS.
+14. Colores elegidos sesion - Cookies
+15. Botones PDF y Excel.
 
+Tratar de hackear con js
+Mirar logins de otros
+Cambiar backend ruta de verificacion cuando se envia el correo
+Cuando se cree un periodo duplicar el anterior
 
-https://es.stackoverflow.com/questions/321611/problema-con-scripts-en-visual-studio-code
+clave cgonzalez : 123456p-*
+Control de json con Oracle db
+Ajustar nuevamente todos los repetidos al momento de editar que no sae igual
+Cuando cree periodo debe seleccionar a quien va evaluar
+Busqueda con proceso en sub procesos
+
+Colocar en periodos las fechas bonitas para seleccion
+Tablas estados de actio o inactivo
+Limpiar modal despues de agregar o editar
+Controlar todos los errores de conexxion
+Cambiar clave proveedor
+Heroku

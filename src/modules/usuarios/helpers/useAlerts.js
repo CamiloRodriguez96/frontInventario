@@ -5,7 +5,7 @@ const useAlerts = () =>{
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -24,10 +24,22 @@ const useAlerts = () =>{
         confirmButtonText: 'Confirmar!'            
     })  
 
+    const ToastAutentication = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: 'rgb(255, 254, 246',
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
     return{
         ToastInformacion,
-        ToastConfirmacion
-
+        ToastConfirmacion,
+        ToastAutentication,
     }
 }
 

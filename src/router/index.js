@@ -1,19 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import usuarioRouter from '@/modules/usuarios/router'
-import proveedorRouter from '@/modules/proveedores/router'
+import usuarioAutentication from '@/modules/autentication/router'
 
 const routes = [
   {
-    path: '/',
+    path: '',
+    name: 'autentication',
+    ...usuarioAutentication
+  },
+  {
+    path: '/u',
     name: 'usuarios',
     ...usuarioRouter
   },
-  {
-    path: '/proveedores',
-    name: 'proveedores',
-    ...proveedorRouter
-  }
-
 ]
 
 const router = createRouter({
@@ -22,6 +21,5 @@ const router = createRouter({
 
 })
 
-// router.beforeEach crear seguridad
 
 export default router
